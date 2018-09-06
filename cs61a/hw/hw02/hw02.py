@@ -26,7 +26,7 @@ def make_adder(n):
     >>> make_adder(1)(2)
     3
     """
-    return 'YOUR EXPRESSION HERE'
+    return lambda x: n + x
 
 # Q2
 def product(n, term):
@@ -51,6 +51,12 @@ def product(n, term):
     True
     """
     "*** YOUR CODE HERE ***"
+    star  = 1 
+    while n != 0:
+        star *= term(n)
+        n -= 1
+    return star
+
 
 def factorial(n):
     """Return n factorial for n >= 0 by calling product.
@@ -64,6 +70,7 @@ def factorial(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    return product(n, identity)
 
 # Q3
 def accumulate(combiner, base, n, term):
@@ -83,6 +90,15 @@ def accumulate(combiner, base, n, term):
     72
     """
     "*** YOUR CODE HERE ***"
+    if combiner == add:
+        star = 0
+    elif combiner == mul:
+        star = 1
+    while n != 0:
+        star = combiner(star, term(n))
+        n -= 1
+
+    return combiner(base, star)
 
 def summation_using_accumulate(n, term):
     """Returns the sum of term(1) + ... + term(n). The implementation
@@ -98,6 +114,7 @@ def summation_using_accumulate(n, term):
     True
     """
     "*** YOUR CODE HERE ***"
+    return accumulate(add, 0, n, term)
 
 def product_using_accumulate(n, term):
     """An implementation of product using accumulate.
@@ -112,7 +129,7 @@ def product_using_accumulate(n, term):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    return accumulate(mul, 1, n, term)
 
 
 ###################
@@ -143,6 +160,7 @@ def make_repeater(f, n):
     """
     "*** YOUR CODE HERE ***"
 
+
 # Q5
 def zero(f):
     return lambda x: x
@@ -153,6 +171,8 @@ def successor(n):
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    
+
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
