@@ -15,7 +15,19 @@ def falling(n, k):
     4
     """
     "*** YOUR CODE HERE ***"
+    if k == 0:
+        return 1
+    star = 1
+    if k <= n:
+        while k > 0:
+            star *= n
+            k -= 1
+            n -= 1
+    else:
+        print("error")
 
+    return star             
+    
 def double_eights(n):
     """Return true if n has two eights in a row.
     >>> double_eights(8)
@@ -32,6 +44,15 @@ def double_eights(n):
     False
     """
     "*** YOUR CODE HERE ***"
+    while n > 0:
+        now_num = n % 10
+        next_num = n // 10 % 10
+        if now_num == 8 and next_num == 8:
+            return True
+        else:
+            n //= 10
+
+    return False       
 
 # Guessing Game
 
@@ -56,7 +77,17 @@ def guess_linear():
     num_guesses = 1
     guess = LOWER
     "*** YOUR CODE HERE ***"
-    return num_guesses
+    correct = is_correct(guess)
+    if correct:
+        return num_guesses
+    if guess <= 10:
+        while not correct:
+            guess += 1
+            correct = is_correct(guess)
+            num_guesses += 1
+    else:
+        print("guesses error")
+    return num_guesses 
 
 def guess_binary():
     """Return the number of attempted guesses. Implement a faster search
@@ -71,7 +102,30 @@ def guess_binary():
     lower, upper = LOWER, UPPER
     guess = (lower + upper) // 2
     "*** YOUR CODE HERE ***"
+    while not is_correct(guess):
+        if is_too_high(guess):
+            upper = guess - 1
+        else:
+            lower = guess + 1
+        guess = (lower + upper) // 2
+        num_guesses += 1
     return num_guesses
+    # correct = is_correct(guess)
+    # high = is_too_high(guess)
+    # middle = (lower + upper) // 2   #1~10 middle is 5
+    # while not correct:
+    #     if not high:
+    #         guess = (lower + guess) // 2
+    #         high = is_too_high(guess)
+    #         correct = False
+    #         num_guesses += 1
+    #     else:
+    #         guess = (upper + guess) // 2
+    #         high = is_too_high(guess)
+    #         correct = is_correct(guess)
+    #         num_guesses += 1
+    
+    # return num_guesses
 
 # Receive user input. You do not need to understand the code below this line.
 
